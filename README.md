@@ -6,10 +6,10 @@ Features:
 - Jumping animation and gravity
 - Randomly spawning obstacles with score tracking
 - End game screen with score display
-- **Test-driven development** approach using `pytest`
+- Test-driven development approach using `pytest`
  
 Requirements:
-Python 3.8+ , Pygame, Pytest
+Python 3.8+ , Pygame, Pytest, os and random
 
 pip install pygame pytest
 python -m pytest -v

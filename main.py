@@ -117,7 +117,7 @@ class Game:
 
         pygame.display.flip()
 
-    def end_game_screen(self):
+def end_game_screen(self):
         font = pygame.font.SysFont(None, 60)
         small_font = pygame.font.SysFont(None, 36)
 
@@ -125,22 +125,41 @@ class Game:
         score_text = small_font.render(f"Final Score: {self.state.score}", True, (0, 0, 0))
         continue_text = small_font.render("Press ESC to Quit", True, (100, 100, 100))
 
+        # Button setup
+        button_font = pygame.font.SysFont(None, 40)
+        button_text = button_font.render("Play Again", True, (255, 255, 255))
+        button_rect = pygame.Rect(self.screen_width // 2 - 80, 800 // 2 + 80, 160, 50)
         self.screen = pygame.display.set_mode((800, 600))
-        self.screen.fill((255, 255, 255))  
-        self.screen.blit(game_over_text, (self.screen_width // 2 - 150, self.screen_height // 2 - 80))
-        self.screen.blit(score_text, (self.screen_width // 2 - 100, self.screen_height // 2))
-        self.screen.blit(continue_text, (self.screen_width // 2 - 130, self.screen_height // 2 + 40))
-        pygame.display.flip()
-
         waiting = True
+
         while waiting:
+            self.screen.fill((255, 255, 255))
+            self.screen.blit(game_over_text, (800 // 2 - 150, 600 // 2 - 100))
+            self.screen.blit(score_text, (800 // 2 - 100, 600 // 2 - 20))
+            self.screen.blit(continue_text, (800 // 2 - 130, 600 // 2 + 20))
+
+            # Draw button with hover effect
+            mouse_pos = pygame.mouse.get_pos()
+            is_hovered = button_rect.collidepoint(mouse_pos)
+            pygame.draw.rect(self.screen, (100, 200, 100) if is_hovered else (80, 160, 80), button_rect)
+            self.screen.blit(button_text, (button_rect.x + 20, button_rect.y + 10))
+
+            pygame.display.flip()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     waiting = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    waiting = False
+                elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if button_rect.collidepoint(event.pos):
                         waiting = False
+                        new_game = Game()
+                        new_game.run()
+
             self.clock.tick(60)
+
+        pygame.quit()
 
         pygame.quit()
 

@@ -107,7 +107,7 @@ class Game:
         self.state.update_score()
 
     def draw(self):
-        self.screen.blit(self.background_image, (0, 0))  # Use image background
+        self.screen.blit(self.background_image, (0, 0)) 
         self.cat_group.draw(self.screen)
         self.obstacles.draw(self.screen)
 
@@ -125,7 +125,8 @@ class Game:
         score_text = small_font.render(f"Final Score: {self.state.score}", True, (0, 0, 0))
         continue_text = small_font.render("Press ESC to Quit", True, (100, 100, 100))
 
-        self.screen.fill((255, 255, 255))  # white background for clarity
+        self.screen = pygame.display.set_mode((800, 600))
+        self.screen.fill((255, 255, 255))  
         self.screen.blit(game_over_text, (self.screen_width // 2 - 150, self.screen_height // 2 - 80))
         self.screen.blit(score_text, (self.screen_width // 2 - 100, self.screen_height // 2))
         self.screen.blit(continue_text, (self.screen_width // 2 - 130, self.screen_height // 2 + 40))
